@@ -15,5 +15,7 @@ Python landscape generator using midpoint displacement.
 1. http://www.colr.org/api.html - (http://www.colr.org/)
 2. http://www.colourlovers.com/api - (http://www.colourlovers.com/)
 3. http://www.pictaculous.com/api/ - (http://www.pictaculous.com/)
+4. It is also worth mentioning https://github.com/elbaschid/python-colourlovers
+5. Another approach would be to __locally generate__ the color palettes (Read some theory). 
 
-It is also worth mentioning https://github.com/elbaschid/python-colourlovers
+
