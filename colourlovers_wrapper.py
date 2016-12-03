@@ -20,7 +20,7 @@ except URLError, e:
     #print 'Error', e
         pass
 
-
+# Actual wrapper
 class ColourLovers(object):
 	'''
 		ColourLovers API python wrapper
