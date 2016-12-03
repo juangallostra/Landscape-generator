@@ -76,7 +76,6 @@ class ColourLovers(object):
 			print(e)
 			
 	def __check_args(self, searchterm, **kwargs):
-                
 		if searchterm not in self.__API_REQUESTS.keys():
 			raise ValueError("Unsupported search: "+searchterm)
 
