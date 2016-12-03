@@ -23,7 +23,7 @@ except URLError, e:
 # Actual wrapper
 class ColourLovers(object):
 	'''
-		ColourLovers API python wrapper
+	ColourLovers API python wrapper
 	'''
 	def __init__(self):
 		self.__API_URL        = "http://www.colourlovers.com/api/"
