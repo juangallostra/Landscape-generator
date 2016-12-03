@@ -27,16 +27,16 @@ class ColourLovers(object):
 	'''
 	def __init__(self):
 		self.__API_URL        = "http://www.colourlovers.com/api/"
-		self.__API_REQUESTS   = {"colors":["new","top","random"],
-								 "palettes":["new","top","random"],
-								 "patterns":["new","top","random"],
-								 "lovers":["new","top"],
-								 "stats":["colors", "palettes", "patterns", "lovers"]}
-		self.__API_PARAMETRES = {"colors":["lover","hueRange","briRange","keywords","keywordExact","orderCol","sortBy","numResults","resultOffset","format","jsonCallback"],
-								 "palettes":["lover","hueOption","hex","hex_logic","keywords","keywordExact","orderCol","sortBy","numResults","resultOffset","format","jsonCallback","showPaletteWidths"],
-								 "patterns":["lover","hueOption","hex","hex_logic","keywords","keywordExact","orderCol","sortBy","numResults","resultOffset","format","jsonCallback"],
-								 "lovers":["orderCol","sortBy","numResults","resultOffset","format","jsonCallback"],
-								 "stats":["format","jsonCallback"]}
+		self.__API_REQUESTS   = {"colors":set({"new","top","random"}),
+								 "palettes":set({"new","top","random"}),
+								 "patterns":set({"new","top","random"}),
+								 "lovers":set({"new","top"}),
+								 "stats":set({"colors", "palettes", "patterns", "lovers"})}
+		self.__API_PARAMETRES = {"colors":set({"lover","hueRange","briRange","keywords","keywordExact","orderCol","sortBy","numResults","resultOffset","format","jsonCallback"}),
+								 "palettes":set({"lover","hueOption","hex","hex_logic","keywords","keywordExact","orderCol","sortBy","numResults","resultOffset","format","jsonCallback","showPaletteWidths"}),
+								 "patterns":set({"lover","hueOption","hex","hex_logic","keywords","keywordExact","orderCol","sortBy","numResults","resultOffset","format","jsonCallback"}),
+								 "lovers":set({"orderCol","sortBy","numResults","resultOffset","format","jsonCallback"}),
+								 "stats":set({"format","jsonCallback"})}
 		self.__API_ADD_PARAM  = ["&","="]
 
 		self.__API_COLORS     = "colors"
@@ -44,7 +44,6 @@ class ColourLovers(object):
 		self.__API_PATTERNS   = "patterns"
 		self.__API_LOVERS     = "lovers"
 		self.__API_STATS      = "stats"
-
 
 	# Public methods
 	def search_colors(self, **kwargs):
@@ -83,9 +82,9 @@ class ColourLovers(object):
 			raise ValueError("Unsupported search: "+searchterm)
 
 		elif kwargs is not None:
-			for key,value in kwargs.iteritems():
-				if key not in self.__API_PARAMETRES[searchterm]:
-					raise ValueError("Unsupported parameter: "+key)
+				invalid_parameters = set(kwargs.keys())-self.__API_PARAMETRES[searchterm]
+				if invalid_parameters:
+					raise ValueError("Unsupported search parameter/s: "+', '.join(invalid_parameters))
 
 		else:
 			return True
