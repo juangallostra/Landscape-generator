@@ -69,7 +69,6 @@ class ColourLovers(object):
 
 
 	# Private methods
-
 	def __search(self, searchterm, **kwargs):
 		try: 
 			self.__check_args(searchterm, **kwargs)
