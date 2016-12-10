@@ -2,8 +2,8 @@
 
 # Landscape Generation with Midpoint displacement algorithm
 # author : Juan Gallostra
-# date : 12/05/2016
-# version : 0.1.0
+# date : 10/12/2016
+# version : 0.1.1
 
 import sys, os
 
@@ -11,25 +11,24 @@ import random
 from PIL import Image, ImageDraw
 import bisect
 
-# non recursive midpoint vertical displacement
-def midp_disp(init,end,roughness,disp=None,iterations=16):
-    # number of points = (2^iterations)+1
-    if disp == None:
-        disp = (init[1]+end[1])/2
-    points = [init,end]
+# Non recursive midpoint vertical displacement (iterative)
+def midpoint_displacement(start,end,roughness,displacement=None,iterations=16):
+    # Number of points = (2^iterations)+1
+    if displacement == None:
+        displacement = (start[1]+end[1])/2
+    points = [start,end]
     for i in range(iterations):
         t_points = tuple(points)
         for z in range(len(t_points)-1):
             midpoint = list(map(lambda x: (t_points[z][x]+t_points[z+1][x])/2,[0,1]))   # calculate midpoint
-            midpoint[1]+=random.choice([-disp,disp])                                    # diplace midpoint y-coordinate
+            midpoint[1]+=random.choice([-displacement,displacement])                    # diplace midpoint y-coordinate
             bisect.insort(points,midpoint)
-        disp = disp*(2**(-roughness))                                                   #reduce displacement range
-    #print(points)
+        displacement = displacement*(2**(-roughness))                                   #reduce displacement range
     return points
         
     
 def fill_horizons_overlap(data_sets,horizons,width,height,theme=None):
-    # color palette: Number of color should be greater or equal than the number of layers
+    # color palette
     color_dict={'0':(240,203,163),'1':(195,157,224),'2':(158,98,204),'3':(130,79,138),'4':(68,28,99),'5':(49,7,82),
                 '6':(23,3,38)}
     
@@ -66,16 +65,16 @@ def main():
     WIDTH = 1000
     HEIGHT = 500
     # Compute different layers of the landscape
-    # More layers can be added here
-    # To get different landscape layouts change the mid_disp parametres
-    test2 = midp_disp([0,270],[WIDTH,190],1,120,9)
-    test3 = midp_disp([0,180],[WIDTH,80],1,30,12)
-    test4 = midp_disp([0,350],[WIDTH,320],0.9,250,8)
-    test5 = midp_disp([250,0],[WIDTH,200],1,20,12)
-    landscape=fill_horizons_overlap([test4,test2,test3,test5],4,WIDTH,HEIGHT)
-    landscape.save(os.getcwd()+'\\landscape.png')
+    test2 = midpoint_displacement([0,270],[WIDTH,190],1,120,9)
+    test = midpoint_displacement([0,20],[500,0],1,7,12)
+    test3 = midpoint_displacement([0,180],[WIDTH,80],1,30,12)
+    test4 = midpoint_displacement([0,350],[WIDTH,320],0.9,250,8)
+    test5 = midpoint_displacement([250,0],[WIDTH,200],1,20,12)
+    landscape=fill_horizons_overlap([test4,test2,test3,test5],4,WIDTH,HEIGHT) #[test4,test2,test3,test5,test]
+    landscape.save(os.getcwd()+'\\testing.png')
 
 
+    
 if __name__ == "__main__":
     main()
 
