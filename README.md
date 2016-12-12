@@ -1,14 +1,20 @@
 # Landscape_generator
 Python landscape generator using midpoint displacement.
 
+I am finally using the API provided by ColourLovers at http://www.colourlovers.com/api
+
 ## TODO
 - Make a python wrapper for the colourlovers API (or similar) to get color palettes
+ * We will have two modules (**_Currently working on this_**):
+    - ```colourlovers_wrapper.py``` is in charge of making requests to the the API and retrieving its responses. **It still doesn't handle all the possible request that are accepted by the API**.
+    - ```colourlovers.py``` Implements ~~xml~~ json deserializing for the API responses (~~if finally using colourlovers API~~) and presents the data in a more friendly and pythonic way (**Work in progress**)
 
- * Implement xml deserializing for the API responses (if finally using colourlovers API)
  
 - Organise and comment the code in landscape_generator.py file so it is more clear
 - Let the user play with the parametres of the landscape
 - Command line arguments / GUI
+- Documentation
+- It would be nice to have a tool to preview and organize the selected colors
 
 
 ## Possible sources for color palettes
