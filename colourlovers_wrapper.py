@@ -9,49 +9,114 @@ class ColourLovers(object):
 	ColourLovers API python wrapper
 	'''
 	def __init__(self):
-		self.__API_URL        = "http://www.colourlovers.com/api/"
-		
-		self.__API_REQUESTS   = {"colors":set({"new","top","random"}),
+		self.__API_URL = "http://www.colourlovers.com/api/"
+
+		self.__API_REQUESTS = {"colors":set({"new","top","random"}),
 								 "palettes":set({"new","top","random"}),
 								 "patterns":set({"new","top","random"}),
 								 "lovers":set({"new","top"}),
-								 "stats":set({"colors", "palettes", "patterns", "lovers"})}
-		
+								 "stats":set({"colors", "palettes", "patterns", "lovers"}),
+								 "color":set(),
+								 "palette":set(),
+								 "pattern":set(),
+								 "lover":set()}
+
 		self.__API_PARAMETRES = {"colors":set({"lover","hueRange","briRange","keywords","keywordExact","orderCol","sortBy","numResults","resultOffset","format","jsonCallback"}),
 								 "palettes":set({"lover","hueOption","hex","hex_logic","keywords","keywordExact","orderCol","sortBy","numResults","resultOffset","format","jsonCallback","showPaletteWidths"}),
 								 "patterns":set({"lover","hueOption","hex","hex_logic","keywords","keywordExact","orderCol","sortBy","numResults","resultOffset","format","jsonCallback"}),
 								 "lovers":set({"orderCol","sortBy","numResults","resultOffset","format","jsonCallback"}),
-								 "stats":set({"format","jsonCallback"})}
-		
-		self.__API_ADD_PARAM  = ["&","="]
+								 "stats":set({"format","jsonCallback"}),
+								 "color":set({"format","jsonCallback"}),
+								 "palette":set({"format","jsonCallback","showPaletteWidths"}),
+								 "pattern":set({"format","jsonCallback"}),
+								 "lover":set({"comments","format","jsonCallback"})}
 
-		self.__API_COLORS     = "colors"
-		self.__API_PALETTES   = "palettes" 
-		self.__API_PATTERNS   = "patterns"
-		self.__API_LOVERS     = "lovers"
-		self.__API_STATS      = "stats"
+		self.__API_ADD_PARAM = ["&","="]
+
+		self.__API_COLORS = "colors"
+		self.__API_PALETTES = "palettes" 
+		self.__API_PATTERNS = "patterns"
+		self.__API_LOVERS = "lovers"
+		self.__API_STATS = "stats"
+		self.__API_COLOR = "color"
+		self.__API_PALETTE = "palette" 
+		self.__API_PATTERN = "pattern"
+		self.__API_LOVER = "lover"
+
 
 	# Public methods
 	def search_colors(self, **kwargs):
-		self.__search(self.__API_COLORS, **kwargs)
-		pass
+		api_response = self.__search(self.__API_COLORS, **kwargs)
+
+		if api_response is not None:
+			return api_response
+		else:
+			print "The data you asked for could not be retrieved"
+
+
+	def search_color(self, **kwargs):
+		api_response = self.__search(self.__API_COLOR, **kwargs)
+
+		if api_response is not None:
+			return api_response
+		else:
+			print "The data you asked for could not be retrieved"
 
 	def search_palettes(self, **kwargs):
-		self.__search(self.__API_PALETTES, **kwargs)
-		pass
+		api_response = self.__search(self.__API_PALETTES, **kwargs)
+
+		if api_response is not None:
+			return api_response
+		else:
+			print "The data you asked for could not be retrieved"
+
+	def search_palette(self, **kwargs):
+		api_response = self.__search(self.__API_PALETTE, **kwargs)
+
+		if api_response is not None:
+			return api_response
+		else:
+			print "The data you asked for could not be retrieved"
 
 	def search_patterns(self, **kwargs):
-		self.__search(self.__API_PATTERNS, **kwargs)
-		pass
+		api_response = self.__search(self.__API_PATTERNS, **kwargs)
+
+		if api_response is not None:
+			return api_response
+		else:
+			print "The data you asked for could not be retrieved"
+
+	def search_pattern(self, **kwargs):
+		api_response = self.__search(self.__API_PATTERN, **kwargs)
+
+		if api_response is not None:
+			return api_response
+		else:
+			print "The data you asked for could not be retrieved"
 
 	def search_lovers(self, **kwargs):
-		self.__search(self.__API_LOVERS, **kwargs)
-		pass
+		api_response = self.__search(self.__API_LOVERS, **kwargs)
+
+		if api_response is not None:
+			return api_response
+		else:
+			print "The data you asked for could not be retrieved"
+
+	def search_lover(self, **kwargs):
+		api_response = self.__search(self.__API_LOVER, **kwargs)
+
+		if api_response is not None:
+			return api_response
+		else:
+			print "The data you asked for could not be retrieved"
 
 	def search_stats(self, **kwargs):
-		self.__search(self.__API_STATS, **kwargs)
-		pass
+		api_response = self.__search(self.__API_STATS, **kwargs)
 
+		if api_response is not None:
+			return api_response
+		else:
+			print "The data you asked for could not be retrieved"
 
 
 	# Private methods
@@ -61,7 +126,7 @@ class ColourLovers(object):
 		except ValueError as e:
 			print(e)
 
-		xml_response = self.__request(searchterm, **kwargs)
+		return self.__request(searchterm, **kwargs)
 			
 	def __check_args(self, searchterm, **kwargs):
 		if searchterm not in self.__API_REQUESTS.keys():
@@ -116,4 +181,3 @@ class ColourLovers(object):
 			return data
 		except URLError, e:
 			print 'Error', e
-			return None
