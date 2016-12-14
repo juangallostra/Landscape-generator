@@ -2,6 +2,8 @@
 
 # Imports
 from urllib2 import Request, urlopen, URLError
+import json
+from colourlovers import *
 
 # API wrapper
 class ColourLovers(object):
@@ -48,8 +50,16 @@ class ColourLovers(object):
 	def search_colors(self, **kwargs):
 		api_response = self.__search(self.__API_COLORS, **kwargs)
 
-		if api_response is not None:
-			return api_response
+		if api_response is not None:			
+			if raw_data == True:
+				return api_response
+			else:
+				print api_response
+				parsed_json = json.loads(api_response)
+				colors = []
+				for color in parsed_json:
+					colors+=[Color(color)]
+				return colors
 		else:
 			print "The data you asked for could not be retrieved"
 
