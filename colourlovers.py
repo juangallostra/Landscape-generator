@@ -1,7 +1,3 @@
-import colourlovers_wrapper as cl
-
-import json
-
 class CommonData(object):
 	def __init__ (self, json_data):
 		self.id = json_data["id"]
@@ -22,20 +18,20 @@ class CommonData(object):
 
 class Palette(CommonData):
 	def __init__(self,json_data):
-		ResponseData.__init__(self,json_data)
+		CommonData.__init__(self,json_data)
 		self.color_widths = json_data["colorWidths"]
 		self.description = json_data["description"]
 		self.colors = json_data["colors"]
 		self.num_colors = len(self.colors)
 
 	def hex_to_rgb(self):	# TODO implement methods
-
+		pass
 	def hex_to_hsv(self):
+		pass
 
 class Color(CommonData):
 	def __init__(self,json_data):
-		data = json.loads(json_data)
-		ResponseData.__init__(self,json_data)
+		CommonData.__init__(self,json_data)
 		self.hex= json_data["hex"]
 		self.RGB = RGB(json_data["rgb"]) # TODO implement attribute creation
 		self.HSV = HSV(json_data["hsv"])
@@ -54,15 +50,15 @@ class Stats(object):
 		pass
 
 class RGB(object):
-	def __init__(self,red,green,blue):
-		self.red = red
-		self.green = green
-		self.blue = blue
-		self.rgb = [red, green, blue]
+	def __init__(self,rgb):
+		self.red = rgb["red"]
+		self.green = rgb["green"]
+		self.blue = rgb["blue"]
+		self.rgb = [self.red, self.green, self.blue]
 
 class HSV(object):
-	def __init__(self,hue,saturation,value):
-		self.hue = hue
-		self.saturation = saturation
-		self.value = value
-		self.hsv = [hue, saturation, value]
+	def __init__(self,hsv):
+		self.hue = hsv["hue"]
+		self.saturation = hsv["saturation"]
+		self.value = hsv["value"]
+		self.hsv = [self.hue, self.saturation, self.value]
