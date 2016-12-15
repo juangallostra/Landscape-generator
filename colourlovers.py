@@ -19,7 +19,10 @@ class CommonData(object):
 class Palette(CommonData):
 	def __init__(self,json_data):
 		CommonData.__init__(self,json_data)
-		self.color_widths = json_data["colorWidths"]
+		try:
+			self.color_widths = json_data["colorWidths"]
+		except:
+			pass
 		self.description = json_data["description"]
 		self.colors = json_data["colors"]
 		self.num_colors = len(self.colors)
