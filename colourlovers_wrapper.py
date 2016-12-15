@@ -5,7 +5,8 @@ from urllib2 import Request, urlopen, URLError
 import json
 from colourlovers import *
 
-# API wrapper
+
+# API Wrapper
 class ColourLovers(object):
 	'''
 	ColourLovers API python wrapper
@@ -47,14 +48,16 @@ class ColourLovers(object):
 
 
 	# Public methods
-	def search_colors(self, **kwargs):
+	def search_colors(self, raw_data=False, **kwargs):
+		if raw_data == False:		# if user hasn't asked for the raw data of the API response build container objects 
+			kwargs["format"] = "json"
+
 		api_response = self.__search(self.__API_COLORS, **kwargs)
 
-		if api_response is not None:			
+		if api_response is not None:
 			if raw_data == True:
 				return api_response
 			else:
-				print api_response
 				parsed_json = json.loads(api_response)
 				colors = []
 				for color in parsed_json:
@@ -64,67 +67,154 @@ class ColourLovers(object):
 			print "The data you asked for could not be retrieved"
 
 
-	def search_color(self, **kwargs):
+	def search_color(self, raw_data=False, **kwargs):
+		if raw_data == False:		# if user hasn't asked for the raw data of the API response build container objects 
+			kwargs["format"] = "json"
+
 		api_response = self.__search(self.__API_COLOR, **kwargs)
 
 		if api_response is not None:
-			return api_response
+			if raw_data == True:
+				return api_response
+			else:
+				parsed_json = json.loads(api_response)
+				colors = []
+				for color in parsed_json:
+					colors+=[Color(color)]
+				return colors
 		else:
 			print "The data you asked for could not be retrieved"
 
-	def search_palettes(self, **kwargs):
+
+	def search_palettes(self, raw_data=False, **kwargs):
+		if raw_data == False:		# if user hasn't asked for the raw data of the API response build container objects 
+			kwargs["format"] = "json"
+
 		api_response = self.__search(self.__API_PALETTES, **kwargs)
 
 		if api_response is not None:
-			return api_response
+			if raw_data == True:
+				return api_response
+			else:
+				parsed_json = json.loads(api_response)
+				palettes = []
+				for palette in parsed_json:
+					palettes+=[Palette(palette)]
+				return palettes
 		else:
 			print "The data you asked for could not be retrieved"
 
-	def search_palette(self, **kwargs):
+
+	def search_palette(self, raw_data=False, **kwargs):
+		if raw_data == False:		# if user hasn't asked for the raw data of the API response build container objects 
+			kwargs["format"] = "json"
+
 		api_response = self.__search(self.__API_PALETTE, **kwargs)
 
 		if api_response is not None:
-			return api_response
+			if raw_data == True:
+				return api_response
+			else:
+				parsed_json = json.loads(api_response)
+				palettes = []
+				for palette in parsed_json:
+					palettes += [Palette(palette)]
+				return palettes
 		else:
 			print "The data you asked for could not be retrieved"
 
-	def search_patterns(self, **kwargs):
+
+	def search_patterns(self, raw_data=False, **kwargs):
+		if raw_data == False:		# if user hasn't asked for the raw data of the API response build container objects 
+			kwargs["format"] = "json"
+
 		api_response = self.__search(self.__API_PATTERNS, **kwargs)
 
 		if api_response is not None:
-			return api_response
+			if raw_data == True:
+				return api_response
+			else:
+				parsed_json = json.loads(api_response)
+				patterns = []
+				for pattern in parsed_json:
+					patterns +=[Pattern(pattern)]
+				return patterns
 		else:
 			print "The data you asked for could not be retrieved"
 
-	def search_pattern(self, **kwargs):
+
+	def search_pattern(self, raw_data=False, **kwargs):
+		if raw_data == False:		# if user hasn't asked for the raw data of the API response build container objects 
+			kwargs["format"] = "json"
+
 		api_response = self.__search(self.__API_PATTERN, **kwargs)
 
 		if api_response is not None:
-			return api_response
+			if raw_data == True:
+				return api_response
+			else:
+				parsed_json = json.loads(api_response)
+				patterns = []
+				for pattern in parsed_json:
+					patterns+=[Pattern(pattern)]
+				return patterns
 		else:
 			print "The data you asked for could not be retrieved"
 
-	def search_lovers(self, **kwargs):
+
+	def search_lovers(self, raw_data=False, **kwargs):
+		if raw_data == False:		# if user hasn't asked for the raw data of the API response build container objects 
+			kwargs["format"] = "json"
+
 		api_response = self.__search(self.__API_LOVERS, **kwargs)
 
 		if api_response is not None:
-			return api_response
+			if raw_data == True:
+				return api_response
+			else:
+				parsed_json = json.loads(api_response)
+				lovers = []
+				for lover in parsed_json:
+					lovers+=[Lover(lover)]
+				return lovers
 		else:
 			print "The data you asked for could not be retrieved"
 
-	def search_lover(self, **kwargs):
+
+	def search_lover(self, raw_data=False, **kwargs):		
+		if raw_data == False:		# if user hasn't asked for the raw data of the API response build container objects 
+			kwargs["format"] = "json"
+
 		api_response = self.__search(self.__API_LOVER, **kwargs)
 
 		if api_response is not None:
-			return api_response
+			if raw_data == True:
+				return api_response
+			else:
+				parsed_json = json.loads(api_response)
+				lovers = []
+				for lover in parsed_json:
+					lovers+=[Lover(lover)]
+				return lovers
 		else:
 			print "The data you asked for could not be retrieved"
 
-	def search_stats(self, **kwargs):
+
+	def search_stats(self, raw_data=False, **kwargs):
+		if raw_data == False:		# if user hasn't asked for the raw data of the API response build container objects 
+			kwargs["format"] = "json"
+
 		api_response = self.__search(self.__API_STATS, **kwargs)
 
 		if api_response is not None:
-			return api_response
+			if raw_data == True:
+				return api_response
+			else:
+				parsed_json = json.loads(api_response)
+				stats = []
+				for stat in parsed_json:
+					stats+=[Stats(stat)]
+				return colors
 		else:
 			print "The data you asked for could not be retrieved"
 
