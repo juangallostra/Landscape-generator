@@ -1,9 +1,13 @@
-## Initial skecthes on building an API wrapper to get color palettes (Colourlovers API)
+## 
 
 # Imports
 from urllib2 import Request, urlopen, URLError
 import json
 from colourlovers import *
+
+# TODOs
+# - implement switches (Lover -> ?comments=1)
+# - implement searches for new, top and random parametres.
 
 
 # API Wrapper
@@ -34,7 +38,7 @@ class ColourLovers(object):
 								 "pattern":set({"format","jsonCallback"}),
 								 "lover":set({"comments","format","jsonCallback"})}
 
-		self.__API_ADD_PARAM = ["&","="]
+		self.__API_ADD_PARAM = ["&","=","?"]
 
 		self.__API_COLORS = "colors"
 		self.__API_PALETTES = "palettes" 
@@ -54,15 +58,10 @@ class ColourLovers(object):
 
 		api_response = self.__search(self.__API_COLORS, **kwargs)
 
-		if api_response is not None:
-			if raw_data == True:
-				return api_response
-			else:
-				parsed_json = json.loads(api_response)
-				colors = []
-				for color in parsed_json:
-					colors+=[Color(color)]
-				return colors
+		containers = self.__process_response(raw_data, api_response, Color) 
+
+		if containers is not None:
+			return containers
 		else:
 			print "The data you asked for could not be retrieved"
 
@@ -73,15 +72,10 @@ class ColourLovers(object):
 
 		api_response = self.__search(self.__API_COLOR, **kwargs)
 
-		if api_response is not None:
-			if raw_data == True:
-				return api_response
-			else:
-				parsed_json = json.loads(api_response)
-				colors = []
-				for color in parsed_json:
-					colors+=[Color(color)]
-				return colors
+		containers = self.__process_response(raw_data, api_response, Color) 
+
+		if containers is not None:
+			return containers
 		else:
 			print "The data you asked for could not be retrieved"
 
@@ -92,15 +86,10 @@ class ColourLovers(object):
 
 		api_response = self.__search(self.__API_PALETTES, **kwargs)
 
-		if api_response is not None:
-			if raw_data == True:
-				return api_response
-			else:
-				parsed_json = json.loads(api_response)
-				palettes = []
-				for palette in parsed_json:
-					palettes+=[Palette(palette)]
-				return palettes
+		containers = self.__process_response(raw_data, api_response, Palette) 
+
+		if containers is not None:
+			return containers
 		else:
 			print "The data you asked for could not be retrieved"
 
@@ -111,15 +100,10 @@ class ColourLovers(object):
 
 		api_response = self.__search(self.__API_PALETTE, **kwargs)
 
-		if api_response is not None:
-			if raw_data == True:
-				return api_response
-			else:
-				parsed_json = json.loads(api_response)
-				palettes = []
-				for palette in parsed_json:
-					palettes += [Palette(palette)]
-				return palettes
+		containers = self.__process_response(raw_data, api_response, Palette) 
+
+		if containers is not None:
+			return containers
 		else:
 			print "The data you asked for could not be retrieved"
 
@@ -130,15 +114,10 @@ class ColourLovers(object):
 
 		api_response = self.__search(self.__API_PATTERNS, **kwargs)
 
-		if api_response is not None:
-			if raw_data == True:
-				return api_response
-			else:
-				parsed_json = json.loads(api_response)
-				patterns = []
-				for pattern in parsed_json:
-					patterns +=[Pattern(pattern)]
-				return patterns
+		containers = self.__process_response(raw_data, api_response, Pattern) 
+
+		if containers is not None:
+			return containers
 		else:
 			print "The data you asked for could not be retrieved"
 
@@ -149,15 +128,10 @@ class ColourLovers(object):
 
 		api_response = self.__search(self.__API_PATTERN, **kwargs)
 
-		if api_response is not None:
-			if raw_data == True:
-				return api_response
-			else:
-				parsed_json = json.loads(api_response)
-				patterns = []
-				for pattern in parsed_json:
-					patterns+=[Pattern(pattern)]
-				return patterns
+		containers = self.__process_response(raw_data, api_response, Pattern) 
+
+		if containers is not None:
+			return containers
 		else:
 			print "The data you asked for could not be retrieved"
 
@@ -168,15 +142,10 @@ class ColourLovers(object):
 
 		api_response = self.__search(self.__API_LOVERS, **kwargs)
 
-		if api_response is not None:
-			if raw_data == True:
-				return api_response
-			else:
-				parsed_json = json.loads(api_response)
-				lovers = []
-				for lover in parsed_json:
-					lovers+=[Lover(lover)]
-				return lovers
+		containers = self.__process_response(raw_data, api_response, Lover) 
+
+		if containers is not None:
+			return containers
 		else:
 			print "The data you asked for could not be retrieved"
 
@@ -187,15 +156,10 @@ class ColourLovers(object):
 
 		api_response = self.__search(self.__API_LOVER, **kwargs)
 
-		if api_response is not None:
-			if raw_data == True:
-				return api_response
-			else:
-				parsed_json = json.loads(api_response)
-				lovers = []
-				for lover in parsed_json:
-					lovers+=[Lover(lover)]
-				return lovers
+		containers = self.__process_response(raw_data, api_response, Lover) 
+
+		if containers is not None:
+			return containers
 		else:
 			print "The data you asked for could not be retrieved"
 
@@ -206,15 +170,11 @@ class ColourLovers(object):
 
 		api_response = self.__search(self.__API_STATS, **kwargs)
 
-		if api_response is not None:
-			if raw_data == True:
-				return api_response
-			else:
-				parsed_json = json.loads(api_response)
-				stats = []
-				for stat in parsed_json:
-					stats+=[Stats(stat)]
-				return colors
+		containers = self.__process_response(raw_data, api_response, Stats) 
+
+		if containers is not None:
+			return containers
+
 		else:
 			print "The data you asked for could not be retrieved"
 
@@ -281,3 +241,18 @@ class ColourLovers(object):
 			return data
 		except URLError, e:
 			print 'Error', e
+
+
+	def __process_response(self, raw_data, api_response, request_type_class):
+
+		if api_response is not None:
+			if raw_data == True:
+				return api_response
+			else:
+				parsed_json = json.loads(api_response)
+				response_containers = []
+				for element in parsed_json:
+					response_containers+=[request_type_class(element)]
+				return response_containers
+		else:
+			return None
