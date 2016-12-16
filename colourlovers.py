@@ -46,7 +46,7 @@ class Palette(CommonData):
 		draw = ImageDraw.Draw(im)
 		rgb_colors = self.hex_to_rgb()
 		for i in range(self.num_colors):
-			draw.rectangle((((offset+tilesize)*i,0),((offset+tilesize)*(i+1)-offset, tilesize)), fill= rgb_colors[i])
+			draw.rectangle((((offset+tilesize)*i,0),((offset+tilesize)*(i+1)-offset, tilesize)), fill = rgb_colors[i])
 
 		im.show()
 
