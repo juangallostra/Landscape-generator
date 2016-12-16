@@ -1,5 +1,5 @@
 import colorsys
-
+from PIL import Image, ImageDraw
 
 # Data containers for API responses
 class CommonData(object):
@@ -39,6 +39,18 @@ class Palette(CommonData):
 	def hex_to_hsv(self):
 		# converts color in hex to HSV. Returns list of tuples such that each tuple is (H,S,V)
 		return [tuple(colorsys.rgb_to_hsv(rgb_color[0], rgb_color[1], rgb_color[2])) for rgb_color in self.hex_to_rgb()]
+
+	def draw_palette(self, tilesize = 24, offset = 8):
+		# Allows the visualization of the palette 
+		im = Image.new("RGB",((tilesize+offset)*self.num_colors, (tilesize+offset)*self.num_colors), "black")
+		draw = ImageDraw.Draw(im)
+		rgb_colors = self.hex_to_rgb()
+		for i in range(self.num_colors):
+			draw.rectangle((((offset+tilesize)*i,0),((offset+tilesize)*(i+1)-offset, tilesize)), fill= rgb_colors[i])
+
+		im.show()
+
+
 
 
 class Color(CommonData):
