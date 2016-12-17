@@ -19,7 +19,7 @@ class CommonData(object):
 		self.badge_url = json_data["badgeUrl"]
 		self.api_url = json_data["apiUrl"]
 
-#  id_num, title, username, numviews, numvotes, numcomments, numhearts, rank, date_created, url, image_url, badge_url, api_url, colors, color_widths, description
+
 
 class Palette(CommonData):
 	def __init__(self,json_data):
@@ -40,7 +40,7 @@ class Palette(CommonData):
 		# converts color in hex to HSV. Returns list of tuples such that each tuple is (H,S,V)
 		return [tuple(colorsys.rgb_to_hsv(rgb_color[0], rgb_color[1], rgb_color[2])) for rgb_color in self.hex_to_rgb()]
 
-	def draw_palette(self, tilesize = 24, offset = 8):
+	def draw(self, tilesize = 24, offset = 8):
 		# Allows the visualization of the palette 
 		im = Image.new("RGB",((tilesize+offset)*self.num_colors, (tilesize+offset)*self.num_colors), "black")
 		draw = ImageDraw.Draw(im)
@@ -52,7 +52,6 @@ class Palette(CommonData):
 
 
 
-
 class Color(CommonData):
 	def __init__(self,json_data):
 		CommonData.__init__(self, json_data)
@@ -60,12 +59,20 @@ class Color(CommonData):
 		self.RGB = RGB(json_data["rgb"]) 
 		self.HSV = HSV(json_data["hsv"])
 
+	def draw(self, tilesize = 24, offset = 8):
+		# Allows visualization of the color
+		im = Image.new("RGB",((tilesize+offset)*self.num_colors, (tilesize+offset)*self.num_colors), "black")
+		draw = ImageDraw.Draw(im)
+		draw.rectangle((((offset+tilesize),0),(tilesize, tilesize)), fill = self.RGB.rgb)
+		im.show()
+
+
 
 class Pattern(CommonData):
 	def __init__(self, json_data):
 		CommonData.__init__(self, json_data)
 		self.colors = json_data["colors"]
-
+		self.num_colors = len(self.colors)
 	def hex_to_rgb(self):	# TODO implement methods
 		# converts color in hex to RGB. Returns list of tuples where the channel order is (R,G,B)
 		return [tuple(int(hex_color[i:i+2], 16) for i in (0, 2 ,4)) for hex_color in self.colors]
@@ -73,6 +80,16 @@ class Pattern(CommonData):
 	def hex_to_hsv(self):
 		# converts color in hex to HSV. Returns list of tuples such that each tuple is (H,S,V)
 		return [tuple(colorsys.rgb_to_hsv(rgb_color[0], rgb_color[1], rgb_color[2])) for rgb_color in self.hex_to_rgb()]
+
+	def draw(self, tilesize = 24, offset = 8):
+		# Allows the visualization of the palette 
+		im = Image.new("RGB",((tilesize+offset)*self.num_colors, (tilesize+offset)*self.num_colors), "black")
+		draw = ImageDraw.Draw(im)
+		rgb_colors = self.hex_to_rgb()
+		for i in range(self.num_colors):
+			draw.rectangle((((offset+tilesize)*i,0),((offset+tilesize)*(i+1)-offset, tilesize)), fill = rgb_colors[i])
+
+		im.show()
 
 class Lover(object):
 	def __init__(self, json_data):
@@ -94,20 +111,26 @@ class Lover(object):
 		except:
 			pass
 
+
+
 class Stats(object):
 	def __init__(self, json_data):
 		self.total = json_data["total"]
+
+
 
 class RGB(object):
 	def __init__(self,rgb):
 		self.red = rgb["red"]
 		self.green = rgb["green"]
 		self.blue = rgb["blue"]
-		self.rgb = [self.red, self.green, self.blue]
+		self.rgb = (self.red, self.green, self.blue)
+
+
 
 class HSV(object):
 	def __init__(self,hsv):
 		self.hue = hsv["hue"]
 		self.saturation = hsv["saturation"]
 		self.value = hsv["value"]
-		self.hsv = [self.hue, self.saturation, self.value]
+		self.hsv = (self.hue, self.saturation, self.value)
