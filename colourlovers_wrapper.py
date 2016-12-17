@@ -3,7 +3,7 @@
 # Imports
 from urllib2 import Request, urlopen, URLError
 import json
-from colourlovers import *
+from colourlovers_data_containers import *
 
 # TODOs
 # - implement switches (Lover -> ?comments=1)
@@ -256,3 +256,4 @@ class ColourLovers(object):
 				return response_containers
 		else:
 			return None
+
