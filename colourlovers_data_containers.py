@@ -73,6 +73,7 @@ class Pattern(CommonData):
 		CommonData.__init__(self, json_data)
 		self.colors = json_data["colors"]
 		self.num_colors = len(self.colors)
+
 	def hex_to_rgb(self):	# TODO implement methods
 		# converts color in hex to RGB. Returns list of tuples where the channel order is (R,G,B)
 		return [tuple(int(hex_color[i:i+2], 16) for i in (0, 2 ,4)) for hex_color in self.colors]
@@ -107,7 +108,7 @@ class Lover(object):
 		self.num_comments_on_profile = json_data["numCommentsOnProfile"]
 		try:
 			pass
-			# implement comments section
+			# implement comments section  
 		except:
 			pass
 
