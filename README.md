@@ -10,7 +10,7 @@ I am finally using the API provided by ColourLovers at http://www.colourlovers.c
     - ```colourlovers.py``` Implements ~~xml~~ json deserializing for the API responses (~~if finally using colourlovers API~~) and presents the data in a more friendly and pythonic way (**Work in progress**)
 
  
-- Organise and comment the code in landscape_generator.py file so it is more clear
+- Organise and comment the code in ```landscape_generator.py``` file so it is more clear
 - Let the user play with the parametres of the landscape
 - Command line arguments / GUI
 - Documentation
