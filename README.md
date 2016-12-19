@@ -6,15 +6,15 @@ I am finally using the API provided by ColourLovers at http://www.colourlovers.c
 ## TODO
 - Make a python wrapper for the colourlovers API (or similar) to get color palettes
  * We will have two modules (**_Currently working on this_**):
-    - ```colourlovers_wrapper.py``` is in charge of making requests to the the API and retrieving its responses. **It still doesn't handle all the possible request that are accepted by the API**.
-    - ```colourlovers.py``` Implements ~~xml~~ json deserializing for the API responses (~~if finally using colourlovers API~~) and presents the data in a more friendly and pythonic way (**Work in progress**)
+    - ```colourlovers_wrapper.py``` is in charge of making requests to the the API and retrieving its responses. **It still doesn't handle all the possible request that are accepted by the API**. (lack of support for searching with parametres _new_, _top_ and _random_ as well as the _switches_ in Color and Lover searches.)
+    - ```colourlovers_data_containers.py``` Implements ~~xml~~ json deserializing for the API responses (~~if finally using colourlovers API~~) and presents the data in a more friendly and pythonic way (**Work in progress**)
 
  
 - Organise and comment the code in ```landscape_generator.py``` file so it is more clear
 - Let the user play with the parametres of the landscape
 - Command line arguments / GUI
 - Documentation
-- It would be nice to have a tool to preview and organize the selected colors
+- It would be nice to have a tool to preview and organize the selected colors (The obtained classes from the search now implement a method, ```draw()```, which draws the Pattern, Color or Palette)
 
 
 ## Possible sources for color palettes
