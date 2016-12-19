@@ -8,6 +8,7 @@ from colourlovers_data_containers import *
 # TODOs
 # - implement switches (Lover -> ?comments=1)
 # - implement searches for new, top and random parametres.
+# - valid parameter types when doing unique searches 
 
 
 # API Wrapper
@@ -34,9 +35,12 @@ class ColourLovers(object):
 								 "lovers":set({"orderCol","sortBy","numResults","resultOffset","format","jsonCallback"}),
 								 "stats":set({"format","jsonCallback"}),
 								 "color":set({"format","jsonCallback"}),
-								 "palette":set({"format","jsonCallback","showPaletteWidths"}),
+								 "palette":set({"id","format","jsonCallback"}),
 								 "pattern":set({"format","jsonCallback"}),
 								 "lover":set({"comments","format","jsonCallback"})}
+
+		self.__API_SWITCHES = {"palette":set({"showPaletteWidths"}),
+								"lover":set({"comments"})}
 
 		self.__API_ADD_PARAM = ["&","=","?"]
 
@@ -84,6 +88,8 @@ class ColourLovers(object):
 		if raw_data == False:		# if user hasn't asked for the raw data of the API response build container objects 
 			kwargs["format"] = "json"
 
+		# handle showPalettesWidth switch
+
 		api_response = self.__search(self.__API_PALETTES, **kwargs)
 
 		containers = self.__process_response(raw_data, api_response, Palette) 
@@ -97,6 +103,8 @@ class ColourLovers(object):
 	def search_palette(self, raw_data=False, **kwargs):
 		if raw_data == False:		# if user hasn't asked for the raw data of the API response build container objects 
 			kwargs["format"] = "json"
+
+		# handle showPalettesWidth switch
 
 		api_response = self.__search(self.__API_PALETTE, **kwargs)
 
@@ -140,6 +148,9 @@ class ColourLovers(object):
 		if raw_data == False:		# if user hasn't asked for the raw data of the API response build container objects 
 			kwargs["format"] = "json"
 
+
+		# implement comments switch
+
 		api_response = self.__search(self.__API_LOVERS, **kwargs)
 
 		containers = self.__process_response(raw_data, api_response, Lover) 
@@ -153,6 +164,8 @@ class ColourLovers(object):
 	def search_lover(self, raw_data=False, **kwargs):		
 		if raw_data == False:		# if user hasn't asked for the raw data of the API response build container objects 
 			kwargs["format"] = "json"
+
+		# implement comments switch
 
 		api_response = self.__search(self.__API_LOVER, **kwargs)
 
@@ -256,4 +269,3 @@ class ColourLovers(object):
 				return response_containers
 		else:
 			return None
-
