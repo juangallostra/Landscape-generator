@@ -42,7 +42,7 @@ class Palette(CommonData):
 
 	def draw(self, tilesize = 24, offset = 8):
 		# Allows the visualization of the palette 
-		im = Image.new("RGB",((tilesize+offset)*self.num_colors, (tilesize+offset)*self.num_colors), "black")
+		im = Image.new("RGB",((offset+tilesize+offset)*self.num_colors, tilesize), "black")
 		draw = ImageDraw.Draw(im)
 		rgb_colors = self.hex_to_rgb()
 		for i in range(self.num_colors):
@@ -61,7 +61,7 @@ class Color(CommonData):
 
 	def draw(self, tilesize = 24, offset = 8):
 		# Allows visualization of the color
-		im = Image.new("RGB",((tilesize+offset)*self.num_colors, (tilesize+offset)*self.num_colors), "black")
+		im = Image.new("RGB",((offset+tilesize+offset), tilesize), "black")
 		draw = ImageDraw.Draw(im)
 		draw.rectangle((((offset+tilesize),0),(tilesize, tilesize)), fill = self.RGB.rgb)
 		im.show()
@@ -84,7 +84,7 @@ class Pattern(CommonData):
 
 	def draw(self, tilesize = 24, offset = 8):
 		# Allows the visualization of the palette 
-		im = Image.new("RGB",((tilesize+offset)*self.num_colors, (tilesize+offset)*self.num_colors), "black")
+		im = Image.new("RGB",((offset+tilesize+offset)*self.num_colors, tilesize), "black")
 		draw = ImageDraw.Draw(im)
 		rgb_colors = self.hex_to_rgb()
 		for i in range(self.num_colors):
@@ -108,7 +108,7 @@ class Lover(object):
 		self.num_comments_on_profile = json_data["numCommentsOnProfile"]
 		try:
 			pass
-			# implement comments section  
+			# implement comments section -> swittch
 		except:
 			pass
 
