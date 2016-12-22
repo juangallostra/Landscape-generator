@@ -23,7 +23,7 @@ def midpoint_displacement(start, end, roughness, vertical_displacement=None, num
     """
     # Final number of points = (2^iterations)+1
     if vertical_displacement is None:
-        # if no initial displacement is specified set displacement to: segment width/2
+        # if no initial displacement is specified set displacement to: (y_start+y_end)/2
         vertical_displacement = (start[1]+end[1])/2
     # Data structure that stores the points is a list of lists where
     # each sublist represents a point and holds its x and y coordinates:
