@@ -3,6 +3,8 @@ test suite for the colourlovers API wrapper
 This test unit is intended only for testing and not for anything else
 @Author: Juan Gallostra
 @Date: 09-03-2017
+
+UNDER DEVELOPMENT
 """
 import colourlovers_wrapper as cl_wrapper
 
