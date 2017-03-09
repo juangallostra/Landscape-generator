@@ -1,7 +1,7 @@
 # Imports
 import collections
 import json
-from urllib2 import Request, urlopen, URLError
+from urllib.request import Request, urlopen, URLError
 from colourlovers_data_containers import *
 
 
@@ -70,122 +70,34 @@ class ColourLovers(object):
         self.__API_PATTERN = "pattern"
         self.__API_LOVER = "lover"
 
-    # Public methods
-    def search_colors(self, raw_data=False, **kwargs):
-        processed_request = self.__process_optional_requests(self.__API_COLORS, **kwargs)
-
-        if not raw_data:  # if user hasn't asked for the raw data of the API response build container objects
-            processed_request.kwargs["format"] = "json"
-
-        api_response = self.__search(self.__API_COLORS, processed_request.optional_request, **processed_request.kwargs)
-        containers = self.__process_response(raw_data, api_response, Color)
-        if containers is not None:
-            return containers
-        else:
-            print "The data you asked for could not be retrieved"
-
-    def search_color(self, raw_data=False, **kwargs):
-        if not raw_data:  # if user hasn't asked for the raw data of the API response build container objects
-            kwargs["format"] = "json"
-
-        api_response = self.__search(self.__API_COLOR, None, **kwargs)
-        containers = self.__process_response(raw_data, api_response, Color)
-        if containers is not None:
-            return containers
-        else:
-            print "The data you asked for could not be retrieved"
-
-    def search_palettes(self, raw_data=False, **kwargs):
-        processed_request = self.__process_optional_requests(self.__API_PALETTES, **kwargs)
-
-        if not raw_data:  # if user hasn't asked for the raw data of the API response build container objects
-            processed_request.kwargs["format"] = "json"
-
-        api_response = self.__search(self.__API_PALETTES, processed_request.optional_request,
-                                     **processed_request.kwargs)
-        containers = self.__process_response(raw_data, api_response, Palette)
-        if containers is not None:
-            return containers
-        else:
-            print "The data you asked for could not be retrieved"
-
-    def search_palette(self, raw_data=False, **kwargs):
-        if not raw_data:  # if user hasn't asked for the raw data of the API response build container objects
-            kwargs["format"] = "json"
-
-        # implement switch
-        api_response = self.__search(self.__API_PALETTE, None, **kwargs)
-        containers = self.__process_response(raw_data, api_response, Palette)
-        if containers is not None:
-            return containers
-        else:
-            print "The data you asked for could not be retrieved"
-
-    def search_patterns(self, raw_data=False, **kwargs):
-        processed_request = self.__process_optional_requests(self.__API_PATTERNS, **kwargs)
-
-        if not raw_data:  # if user hasn't asked for the raw data of the API response build container objects
-            processed_request.kwargs["format"] = "json"
-
-        api_response = self.__search(self.__API_PATTERNS, processed_request.optional_request,
-                                     **processed_request.kwargs)
-        containers = self.__process_response(raw_data, api_response, Pattern)
-        if containers is not None:
-            return containers
-        else:
-            print "The data you asked for could not be retrieved"
-
-    def search_pattern(self, raw_data=False, **kwargs):
-        if not raw_data:  # if user hasn't asked for the raw data of the API response build container objects
-            kwargs["format"] = "json"
-
-        api_response = self.__search(self.__API_PATTERN, None, **kwargs)
-        containers = self.__process_response(raw_data, api_response, Pattern)
-        if containers is not None:
-            return containers
-        else:
-            print "The data you asked for could not be retrieved"
-
-    def search_lovers(self, raw_data=False, **kwargs):
-        processed_request = self.__process_optional_requests(self.__API_LOVERS, **kwargs)
-
-        if not raw_data:  # if user hasn't asked for the raw data of the API response build container objects
-            processed_request.kwargs["format"] = "json"
-
-        api_response = self.__search(self.__API_LOVERS, processed_request.optional_request, **processed_request.kwargs)
-        containers = self.__process_response(raw_data, api_response, Lover)
-        if containers is not None:
-            return containers
-        else:
-            print "The data you asked for could not be retrieved"
-
-    def search_lover(self, raw_data=False, **kwargs):
-        if not raw_data:  # if user hasn't asked for the raw data of the API response build container objects
-            kwargs["format"] = "json"
-
-        # implement comments switch
-
-        api_response = self.__search(self.__API_LOVER, None, **kwargs)
-        containers = self.__process_response(raw_data, api_response, Lover)
-        if containers is not None:
-            return containers
-        else:
-            print "The data you asked for could not be retrieved"
-
-    def search_stats(self, raw_data=False, **kwargs):
-        processed_request = self.__process_optional_requests(self.__API_STATS, **kwargs)
-
-        if not raw_data:  # if user hasn't asked for the raw data of the API response build container objects
-            processed_request.kwargs["format"] = "json"
-
-        api_response = self.__search(self.__API_STATS, processed_request.optional_request, **processed_request.kwargs)
-        containers = self.__process_response(raw_data, api_response, Stats)
-        if containers is not None:
-            return containers
-        else:
-            print "The data you asked for could not be retrieved"
+        # Public methods
+        self.search_colors = self.__public_api_method(self.__API_COLORS, Color)
+        self.search_color = self.__public_api_method(self.__API_COLOR, Color)
+        self.search_palettes = self.__public_api_method(self.__API_PALETTES, Palette)
+        self.search_palette = self.__public_api_method(self.__API_PALETTE, Palette)
+        self.search_patterns = self.__public_api_method(self.__API_PATTERNS, Pattern)
+        self.search_pattern = self.__public_api_method(self.__API_PATTERN, Pattern)
+        self.search_lovers = self.__public_api_method(self.__API_LOVERS, Lover)
+        self.search_lover = self.__public_api_method(self.__API_LOVER, Lover)
+        self.search_stats = self.__public_api_method(self.__API_STATS, Stats)
 
     # Private methods
+
+    def __public_api_method(self, search_type, data_container):
+        def _api_search(raw_data=False, **kwargs):
+            processed_request = self.__process_optional_requests(search_type, **kwargs)
+
+            if not raw_data:  # if user hasn't asked for the raw data of the API response build container objects
+                processed_request.kwargs["format"] = "json"
+
+            api_response = self.__search(search_type, processed_request.optional_request, **processed_request.kwargs).decode()
+            containers = self.__process_response(raw_data, api_response, data_container)
+            if containers is not None:
+                return containers
+            else:
+                print("The data you asked for could not be retrieved")
+        return _api_search
+
     def __search(self, search_term, optional_request_term, **kwargs):
         try:
             self.__check_args(search_term, **kwargs)
@@ -249,8 +161,8 @@ class ColourLovers(object):
             response = urlopen(req)
             data = response.read()
             return data
-        except URLError, e:
-            print 'Error', e
+        except URLError as e:
+            print(e)
 
     def __process_response(self, raw_data, api_response, request_type_class):
         if api_response is not None:
