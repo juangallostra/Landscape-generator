@@ -1,6 +1,8 @@
 # Landscape_generator
 Python landscape generator using midpoint displacement.
 
+To read an in depth explanation visit this [blog entry](https://bitesofcode.wordpress.com/2016/12/23/landscape-generation-using-midpoint-displacement/)
+
 I am finally using the API provided by ColourLovers at http://www.colourlovers.com/api
 
 ## TODO
