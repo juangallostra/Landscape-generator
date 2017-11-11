@@ -1,6 +1,8 @@
 # Landscape_generator
 Python landscape generator using midpoint displacement.
 
+To read an in depth explanation visit this [blog entry](https://bitesofcode.wordpress.com/2016/12/23/landscape-generation-using-midpoint-displacement/).
+
 I am finally using the API provided by ColourLovers at http://www.colourlovers.com/api
 
 ## TODO
@@ -10,7 +12,7 @@ I am finally using the API provided by ColourLovers at http://www.colourlovers.c
     - ```colourlovers_data_containers.py``` Implements ~~xml~~ json deserializing for the API responses. (~~if finally using colourlovers API~~) It presents the data returned by the API request as class instances of the specified search type (Colors, Palettes, Patterns, Lovers or Stats). The attributes that this classes have are the data fields returned by the API for that concrete search type (**Work in progress**).
 
  
-- Organise and comment the code in ```landscape_generator.py``` file so it is more clear
+- ~~Organise and comment the code in ```landscape_generator.py``` file so it is more clear~~
 - Let the user play with the parametres of the landscape
 - Command line arguments / GUI
 - Documentation
