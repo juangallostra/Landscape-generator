@@ -1,0 +1,3 @@
+[submodule "colourlovers_api"]
+	path = colourlovers_api
+	url = https://github.com/juangallostra/Colourlovers-API-wrapper.git
