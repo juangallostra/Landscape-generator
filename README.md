@@ -13,7 +13,7 @@ I am finally using the API provided by ColourLovers at http://www.colourlovers.c
 - Organise and comment the code in ```landscape_generator.py``` file so it is more clear
 - Let the user play with the parametres of the landscape
 - Command line arguments / GUI
-- Documentation
+- ~~Documentation~~ See the blog post linked above and comments in the code.
 - It would be nice to have a tool to preview and organize the selected colors (The obtained classes from the search now implement a method, ```draw()```, which draws the Pattern, Color or Palette it is called on)
 
 
