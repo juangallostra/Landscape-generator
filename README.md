@@ -7,5 +7,5 @@ To read an in depth explanation visit this [blog entry](https://bitesofcode.word
 - ~~Organise and comment the code in ```landscape_generator.py``` file so it is more clear~~
 - Let the user play with the parametres of the landscape
 - Command line arguments / GUI
-- Documentation
+- ~~Documentation~~ See blog post linked above and comments in the code.
 - Add an option to vary the colour palette
