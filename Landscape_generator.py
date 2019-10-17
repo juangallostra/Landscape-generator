@@ -10,7 +10,7 @@ import os                             # path resolving and image saving
 import random                         # midpoint displacement
 from PIL import Image, ImageDraw      # image creation and drawing
 import bisect                         # working with the sorted list of points
-import colourlovers_api as clapi
+from colourlovers import clapi
 
 
 # Iterative midpoint vertical displacement
@@ -65,12 +65,22 @@ def midpoint_displacement(start, end, roughness, vertical_displacement=None,
     return points
         
     
-def draw_layers(layers, width, height, color_dict=None):
+def draw_layers(layers, width, height, color_palette_keyword='snow'):
     # Default color palette
-    if color_dict is None:
-        color_dict = {'0': (195, 157, 224), '1': (158, 98, 204),
-                      '2': (130, 79, 138), '3': (68, 28, 99), '4': (49, 7, 82),
-                      '5': (23, 3, 38), '6': (240, 203, 163)}
+    cl = clapi.ColourLovers()
+    palettes = cl.search_palettes(request='top', keywords=color_palette_keyword, numResults=15)
+    palette = palettes[random.choice(range(len(palettes)))]
+    color_dict =  {str(iter):palette.hex_to_rgb()[iter] for iter in range(len(palette.colors))}
+    if color_dict is None or len(color_dict.keys()) < 4:
+        color_dict = {
+            '0': (195, 157, 224),
+            '1': (158, 98, 204),
+            '2': (130, 79, 138),
+            '3': (68, 28, 99),
+            '4': (49, 7, 82),
+            '5': (23, 3, 38),
+            '6': (240, 203, 163)
+        }
     else:
         # len(color_dict) should be at least: # of layers +1 (background color)
         if len(color_dict) < len(layers)+1:
@@ -105,9 +115,13 @@ def draw_layers(layers, width, height, color_dict=None):
         # traverse all x values in the layer
         for x in range(len(final_layer[1])-1):
             # for each x value draw a line from its y value to the bottom
-            landscape_draw.line((final_layer[1][x][0], height-final_layer[1][x][1],
-                                 final_layer[1][x][0], height),
-                                 color_dict[str(final_layer[0])])
+            landscape_draw.line((
+                final_layer[1][x][0],
+                height-final_layer[1][x][1],
+                final_layer[1][x][0],
+                height
+                ),
+                color_dict[str(final_layer[0])])
 
     return landscape
 
