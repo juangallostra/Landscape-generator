@@ -10,6 +10,7 @@ import os                             # path resolving and image saving
 import random                         # midpoint displacement
 from PIL import Image, ImageDraw      # image creation and drawing
 import bisect                         # working with the sorted list of points
+import colourlovers_api as clapi
 
 
 # Iterative midpoint vertical displacement
@@ -95,7 +96,7 @@ def draw_layers(layers, width, height, color_dict=None):
                 m = float(layer[i+1][1]-layer[i][1])/(layer[i+1][0]-layer[i][0])
                 n = layer[i][1]-m*layer[i][0]
                 r = lambda x: m*x+n  # straight line
-                for j in range(layer[i][0]+1, layer[i+1][0]):  # for all missing x
+                for j in range(int(layer[i][0]+1), int(layer[i+1][0])):  # for all missing x
                     sampled_layer += [[j, r(j)]]  # Sample points
         final_layers += [sampled_layer]
 
