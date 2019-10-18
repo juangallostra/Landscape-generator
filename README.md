@@ -16,6 +16,10 @@ To read an in depth explanation visit this [blog entry](https://bitesofcode.word
 
 ![Snow theme](examples/testing_5.png)
 
+![Grass theme](examples/testing_9.png)
+
+![City theme](examples/testing_10.png)
+
 ![Example landscape](examples/testing_7.png)
 
 ![Moon theme](examples/testing_8.png)
