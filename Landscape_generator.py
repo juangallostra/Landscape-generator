@@ -74,6 +74,7 @@ def midpoint_displacement(
 
 
 def draw_layers(layers, width, height, colour_palette_keyword):
+    """ Compute the points that conform each of the layers in the Landscape """
     colour_dict = None
     # if a colour theme was specified
     if colour_palette_keyword:
@@ -150,6 +151,7 @@ def draw_layers(layers, width, height, colour_palette_keyword):
 
 
 def main():
+    """ Entry point of the program """
     width = 1000  # Terrain width
     height = 500  # Terrain height
     # Compute different layers of the landscape
@@ -160,6 +162,7 @@ def main():
     colour_theme = None
     if args.theme:
         colour_theme = args.theme
+
     landscape = draw_layers(
         [layer_4, layer_3, layer_2, layer_1], width, height, colour_theme
     )
