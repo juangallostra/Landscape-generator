@@ -12,13 +12,13 @@ To read an in depth explanation visit this [blog entry](https://bitesofcode.word
 
 ## Examples
 
-[Default theme](examples/testing_1.png)
+![Default theme](examples/testing_1.png)
 
-[Snow theme](examples/testing_5.png)
+![Snow theme](examples/testing_5.png)
 
-[Example landscape](examples/testing_7.png)
+![Example landscape](examples/testing_7.png)
 
-[Moon theme](examples/testing_8.png)
+![Moon theme](examples/testing_8.png)
 
 ## TO DO
 
